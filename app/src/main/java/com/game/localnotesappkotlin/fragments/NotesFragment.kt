@@ -7,23 +7,25 @@ import android.widget.Toast
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.game.localnotesappkotlin.LocalNotesApp
 import androidx.navigation.fragment.findNavController
 import com.game.localnotesappkotlin.database.NotesEntity
 import com.game.localnotesappkotlin.viewModels.NotesViewModel
 import com.game.localnotesappkotlin.databinding.FragmentNotesBinding
+import com.game.localnotesappkotlin.viewModels.AuthViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var notesEntity: NotesEntity
-    private lateinit var notesViewModel: NotesViewModel
-
-
+    private val notesViewModel by viewModels<NotesViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +33,7 @@ class NotesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
-
-        notesViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(application = requireActivity().application as LocalNotesApp)
-        )[NotesViewModel::class.java]
-
         setIntialData()
-
         return binding.root
     }
 

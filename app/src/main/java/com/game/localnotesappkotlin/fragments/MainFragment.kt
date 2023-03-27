@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,14 +19,18 @@ import com.game.localnotesappkotlin.database.NotesEntity
 import com.game.localnotesappkotlin.databinding.FragmentMainBinding
 import com.game.localnotesappkotlin.viewModels.NotesViewModel
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainFragment  : Fragment() , NotesAdapter.NoteClickInterface {
 
     private var _binding : FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var notesViewModel: NotesViewModel
+//    private lateinit var notesViewModel: NotesViewModel
     private lateinit var notesAdapter : NotesAdapter
+
+    private val notesViewModel by viewModels<NotesViewModel>()
 
 
     override fun onCreateView(
@@ -34,10 +39,10 @@ class MainFragment  : Fragment() , NotesAdapter.NoteClickInterface {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMainBinding.inflate(inflater,container,false)
-        notesViewModel = ViewModelProvider(
+    /*    notesViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application = requireActivity().application as LocalNotesApp)
-        )[NotesViewModel::class.java]
+        )[NotesViewModel::class.java]*/
 
         setNotesAdapter()
         updateNotes()

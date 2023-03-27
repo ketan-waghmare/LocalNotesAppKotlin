@@ -11,18 +11,22 @@ import com.game.localnotesappkotlin.database.NotesDao
 import com.game.localnotesappkotlin.database.NotesDatabase
 import com.game.localnotesappkotlin.database.NotesEntity
 import com.game.localnotesappkotlin.repositories.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
-class NotesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var notesRepository : NoteRepository?= null
+@HiltViewModel
+class NotesViewModel @Inject constructor(private val notesRepository: NoteRepository,application: Application) : ViewModel() {
+
+//    private var notesRepository : NoteRepository?= null
     var allNotes : LiveData<List<NotesEntity>>
     var userId : String?
 
     init {
-        val dao = NotesDatabase.getInstance(application).notesDao()
-        notesRepository = NoteRepository(dao)
+//        val dao = NotesDatabase.getInstance(application).notesDao()
+//        notesRepository = NoteRepository(dao)
         val sharedPref = application?.getSharedPreferences("MyApp", Context.MODE_PRIVATE)
         userId = sharedPref?.getString("userId", "")
         allNotes = notesRepository?.getAllNotes(userId!!)!!

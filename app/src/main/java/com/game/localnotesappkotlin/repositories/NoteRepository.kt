@@ -11,7 +11,7 @@ import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
 
 
-class NoteRepository(private val notesDao: NotesDao) {
+class NoteRepository @Inject constructor(private val notesDao: NotesDao) {
 
     lateinit var allNotes : LiveData<List<NotesEntity>>
 

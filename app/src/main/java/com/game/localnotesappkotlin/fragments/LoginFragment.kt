@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,14 +17,18 @@ import com.game.localnotesappkotlin.R
 import com.game.localnotesappkotlin.database.UserEntity
 import com.game.localnotesappkotlin.databinding.FragmentLoginBinding
 import com.game.localnotesappkotlin.viewModels.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var authViewModel: AuthViewModel
+//    private lateinit var authViewModel: AuthViewModel
 
+    private val authViewModel by viewModels<AuthViewModel>()
     private lateinit var userList : LiveData<List<UserEntity>>
 
     override fun onCreateView(
@@ -31,12 +36,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        authViewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(application = requireActivity().application as LocalNotesApp)
-        )[AuthViewModel::class.java]
-
         return binding.root
     }
 
